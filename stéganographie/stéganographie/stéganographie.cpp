@@ -1,5 +1,8 @@
 #include <bitset>
 #include <cstdint>
+#include <fstream>
+#include <string>
+#include <stdexcept>
 #include <iostream>
 
 bool GetBit(std::uint8_t value, unsigned int index)
@@ -39,8 +42,15 @@ std::uint8_t ToggleBitShort(std::uint8_t value, unsigned int index)
     return static_cast<std::uint8_t>(value ^ (1u << index));
 }
 
-int main()
+uint8_t encode(char cara, char cle)
 {
+    std::uint8_t message = cara;
+    std::uint8_t key = cle;
+    return message ^ key;
+}
+
+int main()
+{/*
     std::uint8_t value_decimal = 1234;
     std::uint8_t value_binary = 0b01010101;
     std::uint8_t value_hex = 0x12AF;
@@ -60,5 +70,25 @@ int main()
     std::cout << "Binary : " << std::bitset<8>(result_and) << std::endl;
 
     std::cout << "Binary custom : ";
-    PrintBits(result_and);
+    PrintBits(result_and);*/
+
+
+    std::string key = "aierre";
+    std::string text = "yolo";
+    /*for (std::size_t i = 0; i < text.size(); ++i) {
+        std::cout << std::bitset<8>(text.c_str()[i]) << std::endl;
+    }*/
+    /*std::cout << text[0] << std::endl;
+    std::cout << std::bitset<8>(text[0]) << std::endl;
+    std::cout << std::bitset<8>(key[0]) << std::endl;*/
+    for (int i = 0; i < text.size(); ++i) {
+        std::cout << std::bitset<8>(encode(text[i], key[i])) << std::endl;
+    }
+    std::cout << "\n\n\n";
+    for (int i = 0; i < text.size(); ++i) {
+        std::cout << std::bitset<8>(text[i]) << std::endl;
+    }
+
+
+    std::ifstream file();
 }
