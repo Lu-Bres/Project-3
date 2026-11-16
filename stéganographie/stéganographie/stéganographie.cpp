@@ -89,6 +89,25 @@ int main()
         std::cout << std::bitset<8>(text[i]) << std::endl;
     }
 
+    std::ifstream file("Images/Image1.bmp", std::ios::binary);
 
-    std::ifstream file();
+    if (!file.is_open())
+    {
+        throw std::runtime_error("Cannot open file");
+    }
+
+    constexpr std::size_t buffer_size = 500;
+    char buffer[buffer_size];
+
+    file.read(buffer, buffer_size);
+
+    std::streamsize bytes_read = file.gcount();
+    std::string result(
+        buffer,
+        static_cast<std::size_t>(bytes_read)
+    );
+
+    file.clear();
+    uint8_t value = file.seekg(54, std::ios::beg);
+	std::cout << std::bitset<8>(value) << std::endl;
 }
