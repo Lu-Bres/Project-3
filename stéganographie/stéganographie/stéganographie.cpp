@@ -108,6 +108,8 @@ int main()
     );
 
     file.clear();
-    uint8_t value = file.seekg(54, std::ios::beg);
-	std::cout << std::bitset<8>(value) << std::endl;
+    file.seekg(53, std::ios::beg);
+    std::uint8_t byte;
+    file >> byte;
+	std::cout << std::bitset<8>(byte) << std::endl;
 }
