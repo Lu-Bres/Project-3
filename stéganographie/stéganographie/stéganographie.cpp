@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <vector>
+#include <sstream>
 
 bool GetBit(std::uint8_t value, unsigned int index)
 {
@@ -52,33 +53,35 @@ uint8_t encode(char cara, char cle)
 
 int main()
 {
-    std::uint8_t value_decimal = 1234;
-    std::uint8_t value_binary = 0b01010101;
-    std::uint8_t value_hex = 0x12AF;
+    //std::uint8_t value_decimal = 1234;
+    //std::uint8_t value_binary = 0b01010101;
+    //std::uint8_t value_hex = 0x12AF;
 
-    std::uint8_t value1 = 0b01010001;
-    std::uint8_t value2 = 0b11111111;
+    //std::uint8_t value1 = 0b01010001;
+    //std::uint8_t value2 = 0b11111111;
 
-    std::uint8_t result_and = value1 & value2; // 0b01010101
-    std::uint8_t result_or = value1 | value2; // 0b11111111
-    std::uint8_t result_xor = value1 ^ value2; // 0b10101010
-    std::uint8_t result_not = ~value1; // 0b10101010
-    std::uint8_t result_shift = value1 << 1; // 0b01010100
-    std::uint8_t result_mask = 1 << 6; // 0b01000000
+    //std::uint8_t result_and = value1 & value2; // 0b01010101
+    //std::uint8_t result_or = value1 | value2; // 0b11111111
+    //std::uint8_t result_xor = value1 ^ value2; // 0b10101010
+    //std::uint8_t result_not = ~value1; // 0b10101010
+    //std::uint8_t result_shift = value1 << 1; // 0b01010100
+    //std::uint8_t result_mask = 1 << 6; // 0b01000000
 
-    std::cout << "Decimal : " << std::dec << +result_and << std::endl;
-    std::cout << "Hexadecimal : " << std::hex << +result_and << std::endl;
-    std::cout << "Binary : " << std::bitset<8>(result_and) << std::endl;
+    //std::cout << "Decimal : " << std::dec << +result_and << std::endl;
+    //std::cout << "Hexadecimal : " << std::hex << +result_and << std::endl;
+    //std::cout << "Binary : " << std::bitset<8>(result_and) << std::endl;
 
-    std::cout << "Binary custom : ";
-    SetBit(result_and, 4);
-    std::cout << std::bitset<8>(result_and);
+    //std::cout << "Binary custom : ";
+    //SetBit(result_and, 4);
+    //std::cout << std::bitset<8>(result_and);
     
 
 
     std::string key = "aierre";
     std::string text = "yolo";
 	std::string encryptext = "";
+    std::string nextext = "";
+    std::string newtext = "";
 	encryptext.reserve(text.size());
 
     //for (std::size_t i = 0; i < text.size(); ++i) {
@@ -87,7 +90,8 @@ int main()
     //std::cout << text[0] << std::endl;
     //std::cout << std::bitset<8>(text[0]) << std::endl;
     //std::cout << std::bitset<8>(key[0]) << std::endl;
-
+    std::cout << std::bitset<8>(text[0]) << std::endl;
+    std::cout << std::bitset<8>(key[0]) << std::endl;
     for (int i = 0; i < text.size(); ++i) {
         encryptext += encode(text[i], key[i]);
     }
@@ -101,54 +105,65 @@ int main()
 		}
 		std::cout << std::endl;
 	}
-    std::cout << value[3][2];
     std::cout << "\n\n\n";
-
-    std::ifstream file("Images/Image1.bmp", std::ios::binary);
-
-    if (!file.is_open())
-    {
-        throw std::runtime_error("Cannot open file");
-    }
-
-    constexpr std::size_t buffer_size = 500;
-    char buffer[buffer_size];
-
-    file.read(buffer, buffer_size);
-
-    std::streamsize bytes_read = file.gcount();
-    std::string result(
-        buffer,
-        static_cast<std::size_t>(bytes_read)
-    );
-
-    file.clear();
-    file.seekg(53, std::ios::beg);
-    int cryptedtext[4][8];
-    int uncryptedtext[4][8];
-    std::uint8_t byte;
-    for (int j = 0; j < 4; ++j)
-    {
-        for (int i = 0; i < 8; ++i) {
-            file >> byte;
-            cryptedtext[j][i] = GetBit(byte, 0);
-            std::cout << cryptedtext[j][i];
-        }
-        std::cout << std::endl;
-    }
-    std::vector<std::uint8_t> bytes[4];
-	for (int j = 0; j < 4; ++j)
-	{
-		for (int i = 0; i < 8; ++i) {
-			bytes[j].push_back(cryptedtext[j][i]);
-		}
-		std::cout << std::endl;
-	}
-    for (int i = 0; i < text.size(); ++i) {
+	std::string decryptext = "";
+	for (int i = 0; i < 4; ++i) {
 		for (int j = 0; j < 8; ++j) {
-            uncryptedtext[i][j] += encode(bytes[i][j], key[i]);
-			std::cout << bytes[i][j];
+            std::string octet = std::to_string(value[i][j]);
+			decryptext += octet;
 		}
-        std::cout << "\n";
+	}
+    std::cout << decryptext << std::endl;
+    for (size_t i = 0; i < decryptext.length(); i += 8) {
+        std::string octet = decryptext.substr(i, 8);
+        char caractere = static_cast<char>(std::bitset<8>(octet).to_ulong());
+        nextext += caractere;
     }
+	std::cout << nextext << std::endl;
+    for (int i = 0; i < text.size(); ++i) {
+        newtext += encode(nextext[i], key[i]);
+    }
+    std::cout << "Decrypted text: " << newtext[1] << "|" << std::endl;
+
+ //   std::ifstream file("Images/Image1.bmp", std::ios::binary);
+
+ //   if (!file.is_open())
+ //   {
+ //       throw std::runtime_error("Cannot open file");
+ //   }
+
+ //   constexpr std::size_t buffer_size = 500;
+ //   char buffer[buffer_size];
+
+ //   file.read(buffer, buffer_size);
+
+ //   std::streamsize bytes_read = file.gcount();
+ //   std::string result(
+ //       buffer,
+ //       static_cast<std::size_t>(bytes_read)
+ //   );
+
+ //   file.clear();
+ //   file.seekg(53, std::ios::beg);
+ //   std::vector<int> cryptedtext[4];
+ //   std::uint8_t uncryptedtext[4];
+ //   std::uint8_t byte;
+ //   for (int j = 0; j < 4; ++j)
+ //   {
+ //       for (int i = 0; i < 8; ++i) {
+ //           file >> byte;
+ //           cryptedtext[j].push_back(GetBit(byte, 0));
+ //           std::cout << cryptedtext[j][i];
+ //       }
+ //       std::cout << std::endl;
+ //   }
+ //   std::string bytes;
+	//for (int j = 0; j < 4; ++j)
+	//{
+	//	for (int i = 0; i < 8; ++i) {
+	//		bytes += cryptedtext[j][i];
+	//	}
+	//	std::cout << std::endl;
+	//}
+ //   std::cout << bytes;
 }
