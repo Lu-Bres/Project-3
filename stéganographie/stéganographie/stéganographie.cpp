@@ -49,9 +49,9 @@ uint8_t encode(char cara, char cle)
     return message ^ key;
 }
 
-void ModOctet(int value_modifier, int octet, std::string index_de_l_image) {
-    std::ifstream file(index_de_l_image, std::ios::binary);
-    std::ofstream file(index_de_l_image, std::ios::binary);
+void ModOctet(int value_modifier, int octet, std::string image_index) {
+    std::ofstream file(image_index, std::ios::binary);
+    /*std::ofstream write_file(image_index, std::ios::binary);*/
 
     if (!file.is_open())
     {
