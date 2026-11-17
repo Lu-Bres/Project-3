@@ -52,34 +52,28 @@ uint8_t encode(char cara, char cle)
 
 int main()
 {
- //   std::uint8_t value_decimal = 1234;
- //   std::uint8_t value_binary = 0b01010101;
- //   std::uint8_t value_hex = 0x12AF;
+    std::uint8_t value_decimal = 1234;
+    std::uint8_t value_binary = 0b01010101;
+    std::uint8_t value_hex = 0x12AF;
 
- //   std::uint8_t value1 = 0b01010101;
- //   std::uint8_t value2 = 0b11111111;
+    std::uint8_t value1 = 0b01010001;
+    std::uint8_t value2 = 0b11111111;
 
- //   std::uint8_t result_and = value1 & value2; // 0b01010101
- //   std::uint8_t result_or = value1 | value2; // 0b11111111
- //   std::uint8_t result_xor = value1 ^ value2; // 0b10101010
- //   std::uint8_t result_not = ~value1; // 0b10101010
- //   std::uint8_t result_shift = value1 << 1; // 0b01010100
- //   std::uint8_t result_mask = 1 << 6; // 0b01000000
+    std::uint8_t result_and = value1 & value2; // 0b01010101
+    std::uint8_t result_or = value1 | value2; // 0b11111111
+    std::uint8_t result_xor = value1 ^ value2; // 0b10101010
+    std::uint8_t result_not = ~value1; // 0b10101010
+    std::uint8_t result_shift = value1 << 1; // 0b01010100
+    std::uint8_t result_mask = 1 << 6; // 0b01000000
 
- //   std::cout << "Decimal : " << std::dec << +result_and << std::endl;
- //   std::cout << "Hexadecimal : " << std::hex << +result_and << std::endl;
- //   std::cout << "Binary : " << std::bitset<8>(result_and) << std::endl;
+    std::cout << "Decimal : " << std::dec << +result_and << std::endl;
+    std::cout << "Hexadecimal : " << std::hex << +result_and << std::endl;
+    std::cout << "Binary : " << std::bitset<8>(result_and) << std::endl;
 
- //   std::cout << "Binary custom : ";
- //   PrintBits(result_and);
- //   if (GetBit(result_and, 6))
- //   {
-	//	std::cout << "Bit 7 is set" << std::endl;
-	//}
- //   else
- //   {
- //       std::cout << "Bit 7 is not set" << std::endl;
- //   }
+    std::cout << "Binary custom : ";
+    SetBit(result_and, 4);
+    std::cout << std::bitset<8>(result_and);
+    
 
 
     std::string key = "aierre";
@@ -96,7 +90,6 @@ int main()
 
     for (int i = 0; i < text.size(); ++i) {
         encryptext += encode(text[i], key[i]);
-        //std::cout << std::bitset<8>(encryptext[i]) << std::endl;
     }
 	std::cout << "Encrypted text: " << encryptext << std::endl;
 	int value[4][8];
@@ -111,35 +104,51 @@ int main()
     std::cout << value[3][2];
     std::cout << "\n\n\n";
 
- //   std::ifstream file("Images/Image1.bmp", std::ios::binary);
+    std::ifstream file("Images/Image1.bmp", std::ios::binary);
 
- //   if (!file.is_open())
- //   {
- //       throw std::runtime_error("Cannot open file");
- //   }
+    if (!file.is_open())
+    {
+        throw std::runtime_error("Cannot open file");
+    }
 
- //   constexpr std::size_t buffer_size = 500;
- //   char buffer[buffer_size];
+    constexpr std::size_t buffer_size = 500;
+    char buffer[buffer_size];
 
- //   file.read(buffer, buffer_size);
+    file.read(buffer, buffer_size);
 
- //   std::streamsize bytes_read = file.gcount();
- //   std::string result(
- //       buffer,
- //       static_cast<std::size_t>(bytes_read)
- //   );
+    std::streamsize bytes_read = file.gcount();
+    std::string result(
+        buffer,
+        static_cast<std::size_t>(bytes_read)
+    );
 
- //   file.clear();
- //   file.seekg(53, std::ios::beg);
- //   std::vector<std::uint8_t> cryptedtext[4][8];
- //   std::vector<std::uint8_t> uncryptedtext[4][8];
- //   for (int j = 0; j < 4; ++j)
- //   {
- //   for (int i = 0; i < 8; ++i) {
- //       std::uint8_t byte;
- //       file >> byte;
- //       cryptedtext[j][i].push_back(ToggleBit(byte, 7));
- //   }
- //   }
-	//std::cout << cryptedtext << std::endl;   
+    file.clear();
+    file.seekg(53, std::ios::beg);
+    int cryptedtext[4][8];
+    int uncryptedtext[4][8];
+    std::uint8_t byte;
+    for (int j = 0; j < 4; ++j)
+    {
+        for (int i = 0; i < 8; ++i) {
+            file >> byte;
+            cryptedtext[j][i] = GetBit(byte, 0);
+            std::cout << cryptedtext[j][i];
+        }
+        std::cout << std::endl;
+    }
+    std::vector<std::uint8_t> bytes[4];
+	for (int j = 0; j < 4; ++j)
+	{
+		for (int i = 0; i < 8; ++i) {
+			bytes[j].push_back(cryptedtext[j][i]);
+		}
+		std::cout << std::endl;
+	}
+    for (int i = 0; i < text.size(); ++i) {
+		for (int j = 0; j < 8; ++j) {
+            uncryptedtext[i][j] += encode(bytes[i][j], key[i]);
+			std::cout << bytes[i][j];
+		}
+        std::cout << "\n";
+    }
 }
