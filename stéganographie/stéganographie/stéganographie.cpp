@@ -4,6 +4,7 @@
 #include <string>
 #include <stdexcept>
 #include <iostream>
+#include <vector>
 
 bool GetBit(std::uint8_t value, unsigned int index)
 {
@@ -50,66 +51,81 @@ uint8_t encode(char cara, char cle)
 }
 
 int main()
-{/*
-    std::uint8_t value_decimal = 1234;
-    std::uint8_t value_binary = 0b01010101;
-    std::uint8_t value_hex = 0x12AF;
+{
+ //   std::uint8_t value_decimal = 1234;
+ //   std::uint8_t value_binary = 0b01010101;
+ //   std::uint8_t value_hex = 0x12AF;
 
-    std::uint8_t value1 = 0b01010101;
-    std::uint8_t value2 = 0b11111111;
+ //   std::uint8_t value1 = 0b01010101;
+ //   std::uint8_t value2 = 0b11111111;
 
-    std::uint8_t result_and = value1 & value2; // 0b01010101
-    std::uint8_t result_or = value1 | value2; // 0b11111111
-    std::uint8_t result_xor = value1 ^ value2; // 0b10101010
-    std::uint8_t result_not = ~value1; // 0b10101010
-    std::uint8_t result_shift = value1 << 1; // 0b01010100
-    std::uint8_t result_mask = 1 << 6; // 0b01000000
+ //   std::uint8_t result_and = value1 & value2; // 0b01010101
+ //   std::uint8_t result_or = value1 | value2; // 0b11111111
+ //   std::uint8_t result_xor = value1 ^ value2; // 0b10101010
+ //   std::uint8_t result_not = ~value1; // 0b10101010
+ //   std::uint8_t result_shift = value1 << 1; // 0b01010100
+ //   std::uint8_t result_mask = 1 << 6; // 0b01000000
 
-    std::cout << "Decimal : " << std::dec << +result_and << std::endl;
-    std::cout << "Hexadecimal : " << std::hex << +result_and << std::endl;
-    std::cout << "Binary : " << std::bitset<8>(result_and) << std::endl;
+ //   std::cout << "Decimal : " << std::dec << +result_and << std::endl;
+ //   std::cout << "Hexadecimal : " << std::hex << +result_and << std::endl;
+ //   std::cout << "Binary : " << std::bitset<8>(result_and) << std::endl;
 
-    std::cout << "Binary custom : ";
-    PrintBits(result_and);*/
+ //   std::cout << "Binary custom : ";
+ //   PrintBits(result_and);
+	//GetBit(result_and, 7);
+ //   std::cout << "Toggled bit : ";
+ //   ToggleBit(result_and, 7);
 
 
     std::string key = "aierre";
     std::string text = "yolo";
-    /*for (std::size_t i = 0; i < text.size(); ++i) {
-        std::cout << std::bitset<8>(text.c_str()[i]) << std::endl;
-    }*/
-    /*std::cout << text[0] << std::endl;
-    std::cout << std::bitset<8>(text[0]) << std::endl;
-    std::cout << std::bitset<8>(key[0]) << std::endl;*/
+	std::string encryptext = "";
+	encryptext.reserve(text.size());
+
+    //for (std::size_t i = 0; i < text.size(); ++i) {
+    //    std::cout << std::bitset<8>(text.c_str()[i]) << std::endl;
+    //}
+    //std::cout << text[0] << std::endl;
+    //std::cout << std::bitset<8>(text[0]) << std::endl;
+    //std::cout << std::bitset<8>(key[0]) << std::endl;
+
     for (int i = 0; i < text.size(); ++i) {
-        std::cout << std::bitset<8>(encode(text[i], key[i])) << std::endl;
+        encryptext += encode(text[i], key[i]);
+        std::cout << std::bitset<8>(encryptext[i]) << std::endl;
     }
+	std::cout << "Encrypted text: " << encryptext << std::endl;
+    std::cout << ToggleBit(text[0], 1) << std::endl;
     std::cout << "\n\n\n";
-    for (int i = 0; i < text.size(); ++i) {
-        std::cout << std::bitset<8>(text[i]) << std::endl;
-    }
 
-    std::ifstream file("Images/Image1.bmp", std::ios::binary);
+ //   std::ifstream file("Images/Image1.bmp", std::ios::binary);
 
-    if (!file.is_open())
-    {
-        throw std::runtime_error("Cannot open file");
-    }
+ //   if (!file.is_open())
+ //   {
+ //       throw std::runtime_error("Cannot open file");
+ //   }
 
-    constexpr std::size_t buffer_size = 500;
-    char buffer[buffer_size];
+ //   constexpr std::size_t buffer_size = 500;
+ //   char buffer[buffer_size];
 
-    file.read(buffer, buffer_size);
+ //   file.read(buffer, buffer_size);
 
-    std::streamsize bytes_read = file.gcount();
-    std::string result(
-        buffer,
-        static_cast<std::size_t>(bytes_read)
-    );
+ //   std::streamsize bytes_read = file.gcount();
+ //   std::string result(
+ //       buffer,
+ //       static_cast<std::size_t>(bytes_read)
+ //   );
 
-    file.clear();
-    file.seekg(53, std::ios::beg);
-    std::uint8_t byte;
-    file >> byte;
-	std::cout << std::bitset<8>(byte) << std::endl;
+ //   file.clear();
+ //   file.seekg(53, std::ios::beg);
+ //   std::vector<std::uint8_t> cryptedtext[4][8];
+ //   std::vector<std::uint8_t> uncryptedtext[4][8];
+ //   for (int j = 0; j < 4; ++j)
+ //   {
+ //   for (int i = 0; i < 8; ++i) {
+ //       std::uint8_t byte;
+ //       file >> byte;
+ //       cryptedtext[j][i].push_back(ToggleBit(byte, 7));
+ //   }
+ //   }
+	//std::cout << cryptedtext << std::endl;   
 }
