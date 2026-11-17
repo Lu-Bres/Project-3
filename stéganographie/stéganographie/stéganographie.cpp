@@ -35,7 +35,7 @@ std::uint8_t ToggleBit(std::uint8_t value, unsigned int index)
 
     std::uint8_t result = value ^ mask;
 
-    return result;
+    return +result;
 }
 
 std::uint8_t ToggleBitShort(std::uint8_t value, unsigned int index)
@@ -72,9 +72,14 @@ int main()
 
  //   std::cout << "Binary custom : ";
  //   PrintBits(result_and);
-	//GetBit(result_and, 7);
- //   std::cout << "Toggled bit : ";
- //   ToggleBit(result_and, 7);
+ //   if (GetBit(result_and, 6))
+ //   {
+	//	std::cout << "Bit 7 is set" << std::endl;
+	//}
+ //   else
+ //   {
+ //       std::cout << "Bit 7 is not set" << std::endl;
+ //   }
 
 
     std::string key = "aierre";
@@ -91,10 +96,19 @@ int main()
 
     for (int i = 0; i < text.size(); ++i) {
         encryptext += encode(text[i], key[i]);
-        std::cout << std::bitset<8>(encryptext[i]) << std::endl;
+        //std::cout << std::bitset<8>(encryptext[i]) << std::endl;
     }
 	std::cout << "Encrypted text: " << encryptext << std::endl;
-    std::cout << ToggleBit(text[0], 1) << std::endl;
+	int value[4][8];
+	for (int j = 0; j < 4; ++j)
+	{
+		for (int i = 0; i < 8; ++i) {
+			value[j][i] = GetBit(encryptext[j], i);
+			std::cout << value[j][i];
+		}
+		std::cout << std::endl;
+	}
+    std::cout << value[3][2];
     std::cout << "\n\n\n";
 
  //   std::ifstream file("Images/Image1.bmp", std::ios::binary);
