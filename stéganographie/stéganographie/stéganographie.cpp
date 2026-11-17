@@ -50,7 +50,8 @@ uint8_t encode(char cara, char cle)
 }
 
 int main()
-{/*
+{
+    /*
     std::uint8_t value_decimal = 1234;
     std::uint8_t value_binary = 0b01010101;
     std::uint8_t value_hex = 0x12AF;
@@ -81,13 +82,16 @@ int main()
     /*std::cout << text[0] << std::endl;
     std::cout << std::bitset<8>(text[0]) << std::endl;
     std::cout << std::bitset<8>(key[0]) << std::endl;*/
+    std::cout << "-----------" << text << "-----------" << std::endl;
     for (int i = 0; i < text.size(); ++i) {
         std::cout << std::bitset<8>(encode(text[i], key[i])) << std::endl;
     }
-    std::cout << "\n\n\n";
+    std::cout << "--------encodé--------\n\n\n";
+    std::cout << "-----------" << text << "-----------" << std::endl;
     for (int i = 0; i < text.size(); ++i) {
         std::cout << std::bitset<8>(text[i]) << std::endl;
     }
+    std::cout << "--------original--------\n\n\n";
 
     std::ifstream file("Images/Image1.bmp", std::ios::binary);
 
@@ -106,10 +110,20 @@ int main()
         buffer,
         static_cast<std::size_t>(bytes_read)
     );
-
+    int startpos = 53;
     file.clear();
-    file.seekg(53, std::ios::beg);
-    std::uint8_t byte;
-    file >> byte;
-	std::cout << std::bitset<8>(byte) << std::endl;
+    file.seekg(startpos, std::ios::beg);
+    uint8_t bittab[8];
+    for (int i = 0; i < 100; ++i)
+    {
+        
+        char byte_c;
+        file.read(&byte_c, 1);
+        uint8_t byte = byte_c;
+        std::cout << "octet " << std::dec << i+1 << " de l'image :" << std::bitset<8>(byte) 
+            << "  :  " << std::hex << +byte << "  :  " << std::bitset<1>(byte) << std::endl << std::endl;
+        file.clear();
+        file.seekg(startpos+i, std::ios::beg);
+    }
+    file.close();
 }
