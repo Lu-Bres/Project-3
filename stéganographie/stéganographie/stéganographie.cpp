@@ -90,22 +90,28 @@ int main()
     //std::cout << text[0] << std::endl;
     //std::cout << std::bitset<8>(text[0]) << std::endl;
     //std::cout << std::bitset<8>(key[0]) << std::endl;
-    std::cout << std::bitset<8>(text[0]) << std::endl;
-    std::cout << std::bitset<8>(key[0]) << std::endl;
+	std::cout << "Text : " << text << std::endl;
+    std::cout << "Key : " << key << std::endl;
     for (int i = 0; i < text.size(); ++i) {
         encryptext += encode(text[i], key[i]);
+        std::cout << "texte " << i + 1 << " : " << text[i] << " (" << std::bitset<8>(text[i]) << ")" << std::endl;
+		std::cout << "Key " << i + 1 << " : " << key[i] << " (" << std::bitset<8>(key[i]) << ")" << std::endl;
+		std::cout << "Encrypted text " << i + 1 << " : " << encryptext[i] << " (" << std::bitset<8>(encryptext[i]) << ")" << std::endl;  
     }
-	std::cout << "Encrypted text: " << encryptext << std::endl;
+	std::cout << "Encrypted text : " << encryptext << std::endl;
 	int value[4][8];
+	std::cout << "Encrypted text in tableau int : " << std::endl;   
 	for (int j = 0; j < 4; ++j)
 	{
+        int a = 7;
 		for (int i = 0; i < 8; ++i) {
-			value[j][i] = GetBit(encryptext[j], i);
+			value[j][i] = GetBit(encryptext[j], a);
 			std::cout << value[j][i];
+            a -= 1;
 		}
 		std::cout << std::endl;
 	}
-    std::cout << "\n\n\n";
+    std::cout << "\n";
 	std::string decryptext = "";
 	for (int i = 0; i < 4; ++i) {
 		for (int j = 0; j < 8; ++j) {
@@ -113,17 +119,19 @@ int main()
 			decryptext += octet;
 		}
 	}
-    std::cout << decryptext << std::endl;
     for (size_t i = 0; i < decryptext.length(); i += 8) {
         std::string octet = decryptext.substr(i, 8);
         char caractere = static_cast<char>(std::bitset<8>(octet).to_ulong());
         nextext += caractere;
     }
-	std::cout << nextext << std::endl;
+	std::cout << "Encrypted text : " << nextext << std::endl;
     for (int i = 0; i < text.size(); ++i) {
         newtext += encode(nextext[i], key[i]);
+		std::cout << "Encrypted text " << i+1 << " : " << nextext[i] << " (" << std::bitset<8>(nextext[i]) << ")" << std::endl;
+        std::cout << "Key : " << i+1 << " " << key[i] << " (" << std::bitset<8>(key[i]) << ")" << std::endl;
+		std::cout << "Decrypted text " << i+1 << " : " << newtext[i] << " (" << std::bitset<8>(newtext[i]) << ")"  << std::endl;
     }
-    std::cout << "Decrypted text: " << newtext[1] << "|" << std::endl;
+    std::cout << "Decrypted text : " << newtext << std::endl;
 
  //   std::ifstream file("Images/Image1.bmp", std::ios::binary);
 
