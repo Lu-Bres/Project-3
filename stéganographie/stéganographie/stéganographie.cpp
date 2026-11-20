@@ -4,43 +4,12 @@
 #include <string>
 #include <stdexcept>
 #include <iostream>
+#include "lecture.h"
 
-bool GetBit(std::uint8_t value, unsigned int index)
-{
-    return (value >> index) & 1u;
-}
 
-std::uint8_t SetBit(std::uint8_t value, unsigned int index)
-{
-    return value | (1u << index);
-}
 
-std::uint8_t ClearBit(std::uint8_t value, unsigned int index)
-{
-    return value & ~(1u << index);
-}
 
-void PrintBits(std::uint8_t value)
-{
-    for (int i = 7; i >= 0; --i)
-    {
-        std::cout << (GetBit(value, i) ? "1" : "0");
-    }
-}
 
-std::uint8_t ToggleBit(std::uint8_t value, unsigned int index)
-{
-    std::uint8_t mask = 1u << index;
-
-    std::uint8_t result = value ^ mask;
-
-    return result;
-}
-
-std::uint8_t ToggleBitShort(std::uint8_t value, unsigned int index)
-{
-    return static_cast<std::uint8_t>(value ^ (1u << index));
-}
 
 uint8_t encode(char cara, char cle)
 {
@@ -49,40 +18,13 @@ uint8_t encode(char cara, char cle)
     return message ^ key;
 }
 
-void ModOctet(int value_modifier, int octet, std::string image_index) {
-    std::ofstream file(image_index, std::ios::binary);
-    /*std::ofstream write_file(image_index, std::ios::binary);*/
 
-    if (!file.is_open())
-    {
-        throw std::runtime_error("Cannot open file");
-    }
-
-    constexpr std::size_t buffer_size = 500;
-    char buffer[buffer_size];
-
-    file.read(buffer, buffer_size);
-
-    std::streamsize bytes_read = file.gcount();
-    std::string result(
-        buffer,
-        static_cast<std::size_t>(bytes_read)
-    );
-    file.clear();
-    file.seekg(53+octet, std::ios::beg);
-    uint8_t bittab[8];
-        char byte_c;
-        file.read(&byte_c, 1);
-        uint8_t byte = byte_c;
-        std::cout << "octet " << std::dec << 54 + octet << " de l'image :" << std::bitset<8>(byte)
-            << "  :  " << std::hex << +byte << "  :  " << std::bitset<1>(byte) << std::endl << std::endl;
-    file.close();
-}
 
 int main()
 {
     std::string key = "aierre";
     std::string text = "yolo";
+    init("images/image1.bmp");
 
 
     std::cout << "-----------" << text << "-----------" << std::endl;
@@ -98,7 +40,7 @@ int main()
     }
     std::cout << "--------original--------\n\n\n";
 
-    ModOctet(1, 1, "images/image1.bmp");
+    lecture("images/image1.bmp");
 }
 
 

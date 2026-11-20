@@ -1,0 +1,9 @@
+#pragma once
+#include <string>
+#include <vector>
+
+
+void lecture(std::string name_file);
+void init(std::string index_file);
+
+extern std::vector<uint8_t>* cfile;
