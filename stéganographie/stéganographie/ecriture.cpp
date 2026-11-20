@@ -50,14 +50,12 @@ std::uint8_t ToggleBitShort(std::uint8_t value, unsigned int index)
 
 
 
-void ecriture(int bit, int index) {
+void ecriture(int bit, int index, int bitcount) {
     if (bit == 1) {
-        (cfile)[53+index] = SetBit((cfile)[53+index], 0);
-        std::cout << "+1";
+        (cfile)[53+bitcount] = SetBit((cfile)[53+bitcount], 0);
     }
     else if (bit == 0) {
-        (cfile)[53+index] = ClearBit((cfile)[53+index], 0);
-        std::cout << "-1";
+        (cfile)[53+bitcount] = ClearBit((cfile)[53+bitcount], 0);
     }
 }
 

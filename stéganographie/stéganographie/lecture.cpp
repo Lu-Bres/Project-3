@@ -8,12 +8,12 @@
 #include <iostream>
 
 std::vector<uint8_t> cfile = {};
-uintmax_t size = 0;
+uintmax_t csize = 0;
 
 
 void init(std::string index_file) {
-    size = std::filesystem::file_size(index_file);
-    cfile.reserve(size);
+    csize = std::filesystem::file_size(index_file);
+    cfile.reserve(csize);
 }
 
 
@@ -54,7 +54,7 @@ void lecture(std::string name_file) {
     file.seekg(0, std::ios::beg);
     char byte_c;
     //std::uintmax_t bsize = std::filesystem::file_size(name_file);
-    for(int i = 0; i < size; ++i) {
+    for(int i = 0; i < csize; ++i) {
         file.read(&byte_c, 1);
         uint8_t byte = byte_c;
         //debug_bit(i,byte);

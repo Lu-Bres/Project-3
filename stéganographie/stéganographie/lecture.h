@@ -5,7 +5,7 @@
 
 void lecture(std::string name_file);
 void init(std::string index_file);
-void ecriture(int bit, int index);
+void ecriture(int bit, int index, int bitcount);
 void debug_tab();
 void create_file();
 uint8_t encode(int size, std::string text, std::string key, std::string encryptext, int keysize, std::vector<std::vector<int>>& value);

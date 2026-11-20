@@ -29,7 +29,7 @@ void teste_modification() {
 int main(int argc, char* argv[])
 {
     std::string key = "aierre";
-    std::string text = "yolo";
+    std::string text = "wallah";
     int keysize = 0;
     std::string encryptext = "";
     std::string nextext = "";
@@ -38,6 +38,8 @@ int main(int argc, char* argv[])
     std::vector<std::vector<int>> value(size, std::vector<int>(8));
     encryptext.reserve(text.size());
     newtext.reserve(text.size());
+    int bit = 0;
+    int bitcount = 0;
     std::string command = argv[1];
     //std::string writefile = argv[3];
     if (argc < 2)
@@ -45,25 +47,28 @@ int main(int argc, char* argv[])
         std::cerr << "Missing command\n";
         return 1;
     }
-    if (command == "decode")
+    else if (command == "encode")
     {
         if (argc != 5)
         {
-            std::cerr << "Invalid decode arguments\n";
+            std::cerr << "Invalid encode arguments\n";
             return 1;
         }
         encode(size, text, key, encryptext, keysize, value);
         init("Images/image1.bmp");
         lecture("images/image1.bmp");
-        debug_tab();
+        //debug_tab();
         for (int i = 0; i < size; ++i) {
 			for (int j = 0; j < 8; ++j) {
-                ecriture(value, i, j);
+				bit = value[i][j];
+                ecriture(bit, i, bitcount);
+                bitcount++;
 			}   
+            std::cout << "\n";
         }
         create_file();
     }
-    if (command == "decode")
+    else if (command == "decode")
     {
         if (argc != 3)
         {
@@ -79,18 +84,18 @@ int main(int argc, char* argv[])
         std::cerr << "Wrong command\n";
         return 1;
     }
-    encode(size, text, key, encryptext, keysize, value);
-    init("Images/image1.bmp");
-    lecture("images/image1.bmp");
+    //encode(size, text, key, encryptext, keysize, value);
+    //init("Images/image1.bmp");
+    //lecture("images/image1.bmp");
 
-    debug_tab();
-    for (int i = 0; i < 5; ++i) {
-        ecriture(, i);
-    }
-    decode(size, key, keysize, value, nextext, newtext);
-    debug_tab();
-    create_file();
-    debug_tab();
+    //debug_tab();
+    //for (int i = 0; i < 5; ++i) {
+    //    ecriture(, i);
+    //}
+    //decode(size, key, keysize, value, nextext, newtext);
+    //debug_tab();
+    //create_file();
+    //debug_tab();
 }
 
 

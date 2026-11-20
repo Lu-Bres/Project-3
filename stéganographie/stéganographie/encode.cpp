@@ -35,6 +35,7 @@ uint8_t encode(int size, std::string text, std::string key, std::string encrypte
         {
             value[j][i] = GetBit(encryptext[j], a);
             a -= 1;
+			std::cout << value[j][i];
         }
     }
     std::cout << "\n";
@@ -97,12 +98,10 @@ void readFile(std::string readfile, std::vector<std::vector<int>>& value, int si
     std::uint8_t byte;
     for (int j = 0; j < size; ++j)
     {
-        int a = 7;
         for (int i = 0; i < 8; ++i)
         {
             file >> byte;
-            value[j][i] = GetBit(byte, a);
-            a -= 1;
+            value[j][i] = GetBit(byte, 0);
         }
     }
 }
