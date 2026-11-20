@@ -45,7 +45,24 @@ int main(int argc, char* argv[])
         std::cerr << "Missing command\n";
         return 1;
     }
-
+    if (command == "decode")
+    {
+        if (argc != 5)
+        {
+            std::cerr << "Invalid decode arguments\n";
+            return 1;
+        }
+        encode(size, text, key, encryptext, keysize, value);
+        init("Images/image1.bmp");
+        lecture("images/image1.bmp");
+        debug_tab();
+        for (int i = 0; i < size; ++i) {
+			for (int j = 0; j < 8; ++j) {
+                ecriture(value, i, j);
+			}   
+        }
+        create_file();
+    }
     if (command == "decode")
     {
         if (argc != 3)
