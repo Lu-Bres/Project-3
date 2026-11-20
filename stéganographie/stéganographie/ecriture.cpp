@@ -50,11 +50,35 @@ std::uint8_t ToggleBitShort(std::uint8_t value, unsigned int index)
 
 
 
-void ecriture(bool bit, int index) {
-	if (bit) {
-		(*cfile)[index] = SetBit((*cfile)[index], 0);
-	}
-	else {
-		(*cfile)[index] = ClearBit((*cfile)[index], 0);
-	}
+void ecriture(int bit, int index) {
+    if (bit == 1) {
+        (cfile)[53+index] = SetBit((cfile)[53+index], 0);
+        std::cout << "+1";
+    }
+    else if (bit == 0) {
+        (cfile)[53+index] = ClearBit((cfile)[53+index], 0);
+        std::cout << "-1";
+    }
 }
+
+void create_file() {
+    std::ofstream file("Images/Newimage.bmp", std::ios::binary);
+
+    if (!file.is_open()) {
+        throw std::runtime_error("Cannot open file");
+    }
+
+
+    for (size_t index = 0; index < cfile.size(); index++)
+    {
+        char byte = cfile[index];
+        file.write(&byte, 1);
+    }
+
+
+    if (!file) {
+        std::cerr << "Erreur lors de l'écriture dans le fichier.\n";
+    } 
+    file.close();
+}
+

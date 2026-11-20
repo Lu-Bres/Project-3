@@ -7,15 +7,13 @@
 #include <stdexcept>
 #include <iostream>
 
-std::vector<uint8_t> copy_file = {};
-std::vector<uint8_t>* cfile = &copy_file;
+std::vector<uint8_t> cfile = {};
 uintmax_t size = 0;
-uintmax_t* bsize = &size;
 
 
 void init(std::string index_file) {
-    *bsize = std::filesystem::file_size(index_file);
-    copy_file.reserve(*bsize);
+    size = std::filesystem::file_size(index_file);
+    cfile.reserve(size);
 }
 
 
@@ -25,10 +23,12 @@ void debug_bit(int i, uint8_t byte) {
 }
 void debug_tab() {
     std::cout << "\n\n\n";
-    for (int i = 0; i < 20; ++i) {
-        std::cout << "\"" << std::bitset<8>((*cfile)[i]) << "\"" << " => " << (*cfile)[i] << ";\n";
+    for (int i = 0; i < 100; ++i) {
+        std::cout << "\"" << std::bitset<8>(cfile[i]) << "\"" << " => " << cfile[i] << ";\n";
     }
 }
+
+
 
 
 
@@ -54,13 +54,13 @@ void lecture(std::string name_file) {
     file.seekg(0, std::ios::beg);
     char byte_c;
     //std::uintmax_t bsize = std::filesystem::file_size(name_file);
-    for(int i = 0; i < *bsize; ++i) {
+    for(int i = 0; i < size; ++i) {
         file.read(&byte_c, 1);
         uint8_t byte = byte_c;
-        debug_bit(i,byte);
-        (*cfile).push_back(byte);
+        //debug_bit(i,byte);
+        (cfile).push_back(byte);
         file.seekg(i + 1, std::ios::beg);
     }
     file.close();
-    debug_tab();
+    //debug_tab();
 }

@@ -24,7 +24,8 @@ int main()
 {
     std::string key = "aierre";
     std::string text = "yolo";
-    init("images/image1.bmp");
+    init("Images/image1.bmp");
+
 
 
     std::cout << "-----------" << text << "-----------" << std::endl;
@@ -40,7 +41,15 @@ int main()
     }
     std::cout << "--------original--------\n\n\n";
 
+    int choixbit[5] = { 1,0,1,0,0 };
     lecture("images/image1.bmp");
+    debug_tab();
+    for (int i = 0; i < 5; ++i) {
+        ecriture(choixbit[i], i);
+    }
+    debug_tab();
+    create_file();
+    debug_tab();
 }
 
 
