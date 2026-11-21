@@ -3,11 +3,11 @@
 #include <vector>
 
 
-void lecture(std::string name_file);
+void lecture(std::string name_file, int sizebit);
 void init(std::string index_file);
 void ecriture(int bit, int index, int bitcount);
 void debug_tab();
-void create_file();
+void create_file(std::string writefile);
 uint8_t encode(int size, std::string text, std::string key, std::string encryptext, int keysize, std::vector<std::vector<int>>& value);
 uint8_t encryption(char cara, char cle);
 bool GetBit(std::uint8_t value, unsigned int index);

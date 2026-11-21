@@ -1,10 +1,8 @@
 #include <bitset>
 #include <cstdint>
 #include <fstream>
-#include <string>
 #include <stdexcept>
 #include <iostream>
-#include <vector>
 #include <sstream>
 #include "lecture.h"
 
@@ -42,7 +40,6 @@ uint8_t encode(int size, std::string text, std::string key, std::string encrypte
     return 0;
 }
 
-
 void decode(int size, std::string key, int keysize, std::vector<std::vector<int>>& value, std::string nextext, std::string newtext)
 
 {
@@ -74,7 +71,6 @@ void decode(int size, std::string key, int keysize, std::vector<std::vector<int>
     std::cout << "Decrypted text : " << newtext << std::endl;
 
 }
-
 
 void readFile(std::string readfile, std::vector<std::vector<int>>& value, int size)
 {

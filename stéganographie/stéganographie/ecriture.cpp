@@ -2,13 +2,9 @@
 #include <cstdint>
 #include <filesystem>
 #include <fstream>
-#include <string>
 #include <stdexcept>
 #include <iostream>
 #include "lecture.h"
-
-
-
 
 bool GetBit(std::uint8_t value, unsigned int index)
 {
@@ -47,9 +43,6 @@ std::uint8_t ToggleBitShort(std::uint8_t value, unsigned int index)
     return static_cast<std::uint8_t>(value ^ (1u << index));
 }
 
-
-
-
 void ecriture(int bit, int index, int bitcount) {
     if (bit == 1) {
         (cfile)[53+bitcount] = SetBit((cfile)[53+bitcount], 0);
@@ -59,8 +52,8 @@ void ecriture(int bit, int index, int bitcount) {
     }
 }
 
-void create_file() {
-    std::ofstream file("Images/Newimage.bmp", std::ios::binary);
+void create_file(std::string writefile) {
+    std::ofstream file(writefile, std::ios::binary);
 
     if (!file.is_open()) {
         throw std::runtime_error("Cannot open file");

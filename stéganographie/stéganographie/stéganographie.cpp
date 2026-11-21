@@ -1,7 +1,6 @@
 #include <bitset>
 #include <cstdint>
 #include <fstream>
-#include <string>
 #include <stdexcept>
 #include <iostream>
 #include "lecture.h"
@@ -29,19 +28,19 @@ void teste_modification() {
 int main(int argc, char* argv[])
 {
     std::string key = "aierre";
-    std::string text = "wallah";
+    std::string text = "yolo";
     int keysize = 0;
     std::string encryptext = "";
     std::string nextext = "";
     std::string newtext = "";
     int size = text.length();
+	int sizebit = size * 8;
     std::vector<std::vector<int>> value(size, std::vector<int>(8));
     encryptext.reserve(text.size());
     newtext.reserve(text.size());
     int bit = 0;
     int bitcount = 0;
     std::string command = argv[1];
-    //std::string writefile = argv[3];
     if (argc < 2)
     {
         std::cerr << "Missing command\n";
@@ -54,10 +53,11 @@ int main(int argc, char* argv[])
             std::cerr << "Invalid encode arguments\n";
             return 1;
         }
+        std::string readfile = argv[2];
+        std::string writefile = argv[3];
         encode(size, text, key, encryptext, keysize, value);
-        init("Images/image1.bmp");
-        lecture("images/image1.bmp");
-        //debug_tab();
+        init(argv[2]);
+        lecture(argv[2], sizebit);
         for (int i = 0; i < size; ++i) {
 			for (int j = 0; j < 8; ++j) {
 				bit = value[i][j];
@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
 			}   
             std::cout << "\n";
         }
-        create_file();
+        create_file(writefile);
     }
     else if (command == "decode")
     {
@@ -84,18 +84,6 @@ int main(int argc, char* argv[])
         std::cerr << "Wrong command\n";
         return 1;
     }
-    //encode(size, text, key, encryptext, keysize, value);
-    //init("Images/image1.bmp");
-    //lecture("images/image1.bmp");
-
-    //debug_tab();
-    //for (int i = 0; i < 5; ++i) {
-    //    ecriture(, i);
-    //}
-    //decode(size, key, keysize, value, nextext, newtext);
-    //debug_tab();
-    //create_file();
-    //debug_tab();
 }
 
 
